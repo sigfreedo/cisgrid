@@ -195,7 +195,7 @@ footer.site p{margin:.4rem 0}
     <nav class="top" aria-label="Main">
       <a href="#how">How it works</a>
       <a href="#framework">Framework</a>
-      <a href="#privacy">Privacy</a>
+      <a href="/privacy">Privacy</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -255,39 +255,6 @@ footer.site p{margin:.4rem 0}
     </div>
   </section>
 
-  <!-- PRIVACY POLICY -->
-  <section id="privacy" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-    <div class="wrap">
-      <h2 class="section-title">Privacy policy</h2>
-      <p class="section-sub">The instrument is built to need no personal data. This policy states exactly what happens, in line with the EU General Data Protection Regulation (Regulation 2016/679).</p>
-      <div class="panel">
-        <h3>Who is responsible</h3>
-        <p>The data controller is <b>Prof. Salvatore Di Dio</b>, Department of Architecture, University of Palermo, Viale delle Scienze, Edificio 14, 90128 Palermo, Italy. Enquiries: <a href="mailto:salvatore.didio@unipa.it">salvatore.didio@unipa.it</a>.</p>
-        <p class="todo">To complete before launch: the contact details of the University of Palermo Data Protection Officer.</p>
-
-        <h3>What the tool does with your answers</h3>
-        <p>The interview runs entirely in your browser. Your ratings and your written notes are held on your device so that you can leave and resume, and they are cleared when you choose to start over. Your written notes are never transmitted anywhere, under any circumstance.</p>
-
-        <h3>What is collected, and only with your consent</h3>
-        <p>Before the interview begins you are asked whether you wish to contribute to the research. If you agree, and only then, the following is sent when you finish or leave: the thirty ratings from 0 to 3, the dimension you reached, whether you completed the interview, whether you downloaded the report, and a random session identifier generated in your browser. No name, no email address, no IP address and no free text are transmitted. The record cannot be traced back to you or to your organisation. If you decline, nothing is sent and the tool works exactly the same.</p>
-        <p>The purpose is the one stated in the underlying study: to keep the diagnostic grid under revision and to identify which design knowledge teams most often lack. The legal basis is your consent (Article 6(1)(a) GDPR), which you may withhold at any time by declining. Because the records carry no identifier linking them to a person, they cannot be individually retrieved or deleted after submission; this is an intentional consequence of collecting no personal data. Contributions are stored in a spreadsheet held by the data controller and are retained for the duration of the research.</p>
-
-        <h3>Usage statistics</h3>
-        <p>Visits are counted with GoatCounter, which sets no cookies, stores no personal data and does not track you across sites. This is why you see no cookie banner: the site sets no cookies for tracking.</p>
-
-        <h3>Voice input</h3>
-        <p>Answering by speaking is optional. If you use it on Chrome, Edge or Safari, your browser sends the audio to its own speech service (Google or Apple respectively) to transcribe it, in the same way as dictation elsewhere on your device, and their terms apply to that step. The site itself neither receives nor stores audio. You can switch voice off and type instead at any time. Having questions read aloud sends nothing anywhere.</p>
-
-        <h3>Contact form</h3>
-        <p>If you write to us through the form, the message and any email address you choose to give are transmitted by Web3Forms, which delivers them to the controller's mailbox. Use the email address above if you would rather not use the form.</p>
-
-        <h3>Your rights</h3>
-        <p>Where personal data exist, you have the right of access, rectification, erasure, restriction, portability and objection, and the right to lodge a complaint with the Italian Data Protection Authority (Garante per la protezione dei dati personali). In practice, the only personal data this site can hold is what you voluntarily write in the contact form.</p>
-        <p class="note">Last updated: <span id="policyDate">2026</span>.</p>
-      </div>
-    </div>
-  </section>
-
   <section id="contact">
     <div class="wrap">
       <h2 class="section-title">Contact</h2>
@@ -312,7 +279,7 @@ footer.site p{margin:.4rem 0}
   <div class="wrap">
     <p><b>CIS Grid</b> · a design diagnostic for Climate Information Services. A formative instrument: it turns what is not yet designed into a brief, it does not certify a score.</p>
     <p>Di Dio, S., La Scala, P., Jamaldeen, B. M., Weigel, J. S., &amp; Schillaci, D. <i>From Forecast to Decision: touchpoints, mediation, and a formative diagnostic design grid for Climate Information Services</i>. <span class="todo" style="display:inline-block;margin:.3rem 0">Add the full citation and DOI once the article is published.</span></p>
-    <p><a href="#privacy">Privacy policy</a> · <a href="#contact">Contact</a></p>
+    <p><a href="/privacy">Privacy policy</a> · <a href="#contact">Contact</a></p>
     <div class="colophon">
       <p style="margin:0">Designed and developed by <b>Domenico Schillaci</b>. Open source: the code and the content of this instrument are free to inspect, reuse and adapt.</p>
       <div class="badges">
@@ -617,8 +584,6 @@ window.addEventListener('pagehide', ()=>{
 (function initLanding(){
   document.getElementById('dimList').innerHTML = DIMENSIONS.map(d=>`
     <div class="dim"><span class="tag">${d.id}</span><h4>${d.title}</h4><p>${d.keyQ}</p></div>`).join('');
-  document.getElementById('policyDate').textContent =
-    new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long'});
   document.getElementById('repoLink').href = CONFIG.REPO_URL;
   const saved = loadLocal();
   if(saved) document.getElementById('resumeBar').classList.remove('hidden');
@@ -704,7 +669,7 @@ function render(){
         <li>a random session identifier generated in your browser.</li>
       </ul>
       <p style="margin-top:.8rem"><b>What is never sent:</b> your written notes, your name, your email, your IP address, and anything identifying your service or organisation. The record cannot be traced back to you.</p>
-      <p>It is used to see which dimensions teams find hardest, and which design knowledge is least held. You can decline and use the tool exactly as it is. See the <a href="#privacy" target="_blank" rel="noopener">privacy policy</a>.</p>
+      <p>It is used to see which dimensions teams find hardest, and which design knowledge is least held. You can decline and use the tool exactly as it is. See the <a href="/privacy" target="_blank" rel="noopener">privacy policy</a>.</p>
       <div class="choice">
         <button class="btn" id="consentYes">Contribute anonymously, and continue</button>
         <button class="btn ghost" id="consentNo">Continue without contributing</button>
