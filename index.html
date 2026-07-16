@@ -197,7 +197,7 @@ footer.site p{margin:.4rem 0}
       <a href="#how">How it works</a>
       <a href="#framework">Framework</a>
       <a href="/privacy">Privacy</a>
-      <a href="#contact">Contact</a>
+      <a href="/contact">Contact</a>
     </nav>
   </div>
 </header>
@@ -256,24 +256,6 @@ footer.site p{margin:.4rem 0}
     </div>
   </section>
 
-  <section id="contact">
-    <div class="wrap">
-      <h2 class="section-title">Contact</h2>
-      <p class="section-sub">Questions about the instrument, the study, or using the grid with your team.</p>
-      <div class="panel">
-        <form id="contactForm" novalidate>
-          <label for="cEmail">Your email (so we can reply)</label>
-          <input type="email" id="cEmail" name="email" placeholder="name@example.org" autocomplete="email">
-          <label for="cMsg">Message</label>
-          <textarea id="cMsg" name="message" placeholder="Your question or context" required></textarea>
-          <!-- honeypot -->
-          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-          <div style="margin-top:14px"><button class="btn" type="submit" id="cSend">Send message</button></div>
-          <p class="formmsg" id="cMsgOut" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="site">
@@ -288,7 +270,7 @@ footer.site p{margin:.4rem 0}
       <a class="badge" href="https://opensource.org/license/mit" target="_blank" rel="license noopener">Code license: MIT</a>
       <a class="badge" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener">Content license: CC BY-SA 4.0</a>
     </div>
-    <p class="note" style="margin-top:14px">© 2026 Domenico Schillaci · <a href="/privacy">Privacy</a> · <a href="#contact">Contact</a></p>
+    <p class="note" style="margin-top:14px">© 2026 Domenico Schillaci · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a></p>
   </div>
 </footer>
 
@@ -1027,52 +1009,6 @@ async function downloadPDF(){
     btn.textContent=old; btn.disabled=false;
   }
 }
-
-/* =========================================================================
-   CONTACT FORM (Web3Forms)
-   ========================================================================= */
-document.getElementById('contactForm').addEventListener('submit', async (ev)=>{
-  ev.preventDefault();
-  const out=document.getElementById('cMsgOut');
-  const btn=document.getElementById('cSend');
-  const email=document.getElementById('cEmail').value.trim();
-  const msg=document.getElementById('cMsg').value.trim();
-  out.className='formmsg';
-  if(!msg){ out.className='formmsg err'; out.textContent='Please write a message first.'; return; }
-
-  if(!CONFIG.WEB3FORMS_KEY || CONFIG.WEB3FORMS_KEY.startsWith('PASTE_')){
-    window.location.href = `mailto:${CONFIG.CONTACT_EMAIL}?subject=${encodeURIComponent('CIS Grid — enquiry')}&body=${encodeURIComponent(msg+(email?('\n\nReply to: '+email):''))}`;
-    return;
-  }
-  btn.disabled=true; btn.textContent='Sending…';
-  try{
-    const r = await fetch('https://api.web3forms.com/submit',{
-      method:'POST',
-      headers:{'Content-Type':'application/json', 'Accept':'application/json'},
-      body: JSON.stringify({
-        access_key: CONFIG.WEB3FORMS_KEY,
-        subject: 'CIS Grid — new enquiry',
-        from_name: 'cisgrid.org',
-        email: email || 'no-reply@cisgrid.org',
-        message: msg
-      })
-    });
-    const data = await r.json();
-    if(data.success){
-      out.className='formmsg ok';
-      out.textContent='Thank you. Your message has been sent, and we will reply to the address you gave.';
-      document.getElementById('contactForm').reset();
-      track('contact-sent','Contact message sent');
-    }else{
-      throw new Error(data.message||'failed');
-    }
-  }catch(e){
-    out.className='formmsg err';
-    out.innerHTML = `The message could not be sent. Please write to <a href="mailto:${CONFIG.CONTACT_EMAIL}">${CONFIG.CONTACT_EMAIL}</a>.`;
-  }finally{
-    btn.disabled=false; btn.textContent='Send message';
-  }
-});
 
 /* Enter advances when a score is chosen */
 document.addEventListener('keydown',(e)=>{
