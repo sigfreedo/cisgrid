@@ -57,7 +57,8 @@ button{font-family:inherit;font-size:1rem;cursor:pointer}
 header.site{border-bottom:1px solid var(--line);background:rgba(255,253,249,.9);
   backdrop-filter:blur(6px);position:sticky;top:0;z-index:20}
 header.site .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
-.brand{font-weight:700;display:flex;align-items:center;gap:.55rem;font-size:1.02rem}
+.brand{font-weight:700;display:flex;align-items:center;gap:.55rem;font-size:1.02rem;text-decoration:none;color:var(--ink)}
+.brand:hover{color:var(--accent-ink)}
 .brand svg{width:20px;height:20px}
 nav.top a{color:var(--muted);text-decoration:none;margin-left:1.1rem;font-size:.94rem}
 nav.top a:hover{color:var(--ink);text-decoration:underline}
@@ -188,10 +189,10 @@ footer.site p{margin:.4rem 0}
 
 <header class="site">
   <div class="wrap">
-    <div class="brand">
+    <a class="brand" href="/" aria-label="CIS Grid — home">
       <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2l12 7v14l-12 7-12-7V9z" fill="#2f6f5e"/><path d="M16 8l7 4v8l-7 4-7-4v-8z" fill="#f6f4ef"/></svg>
       CIS Grid
-    </div>
+    </a>
     <nav class="top" aria-label="Main">
       <a href="#how">How it works</a>
       <a href="#framework">Framework</a>
@@ -277,20 +278,17 @@ footer.site p{margin:.4rem 0}
 
 <footer class="site">
   <div class="wrap">
-    <p><b>CIS Grid</b> · a design diagnostic for Climate Information Services. A formative instrument: it turns what is not yet designed into a brief, it does not certify a score.</p>
-    <p>Di Dio, S., La Scala, P., Jamaldeen, B. M., Weigel, J. S., &amp; Schillaci, D. <i>From Forecast to Decision: touchpoints, mediation, and a formative diagnostic design grid for Climate Information Services</i>. <span class="todo" style="display:inline-block;margin:.3rem 0">Add the full citation and DOI once the article is published.</span></p>
-    <p><a href="/privacy">Privacy policy</a> · <a href="#contact">Contact</a></p>
-    <div class="colophon">
-      <p style="margin:0">Designed and developed by <b>Domenico Schillaci</b>. Open source: the code and the content of this instrument are free to inspect, reuse and adapt.</p>
-      <div class="badges">
-        <a class="badge" id="repoLink" href="#" rel="noopener">
-          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
-          Source code on GitHub
-        </a>
-        <a class="badge" href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license noopener" target="_blank">Code: MIT · Content: CC BY-SA 4.0</a>
-      </div>
-      <p class="todo" style="margin-top:10px">Set <code>REPO_URL</code> in the page configuration once the GitHub repository is public.</p>
+    <p>The CIS Grid digital tool is designed and developed by <a href="https://www.linkedin.com/in/domenicoschillaci/" target="_blank" rel="noopener">Domenico Schillaci</a>.</p>
+    <p>This is an Open Source project: the code and the content of this instrument are free to inspect, reuse and adapt.</p>
+    <div class="badges">
+      <a class="badge" id="repoLink" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        Source code on GitHub
+      </a>
+      <a class="badge" href="https://opensource.org/license/mit" target="_blank" rel="license noopener">Code license: MIT</a>
+      <a class="badge" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="license noopener">Content license: CC BY-SA 4.0</a>
     </div>
+    <p class="note" style="margin-top:14px">© 2026 Domenico Schillaci · <a href="/privacy">Privacy</a> · <a href="#contact">Contact</a></p>
   </div>
 </footer>
 
