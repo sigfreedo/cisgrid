@@ -540,15 +540,18 @@ function sendToCollector(status){
   if(!CONFIG.COLLECTOR_URL || CONFIG.COLLECTOR_URL.startsWith('PASTE_')) return;
   if(state.sent && status==='completed') return;
   const body = JSON.stringify(buildPayload(status));
+  // fetch (not sendBeacon): Apps Script runs doPost only after the client follows
+  // its 302 redirect, which sendBeacon does not do. text/plain avoids a CORS preflight;
+  // keepalive lets the request outlive the page when the user leaves mid-interview.
   try{
-    const blob = new Blob([body], {type:'text/plain;charset=UTF-8'}); // simple request, no CORS preflight
-    if(navigator.sendBeacon && navigator.sendBeacon(CONFIG.COLLECTOR_URL, blob)){
-      if(status==='completed') state.sent = true;
-      return;
-    }
-  }catch(e){}
-  try{
-    fetch(CONFIG.COLLECTOR_URL, {method:'POST', body:body, keepalive:true, mode:'no-cors'});
+    fetch(CONFIG.COLLECTOR_URL, {
+      method:'POST',
+      body: body,
+      headers: {'Content-Type':'text/plain;charset=UTF-8'},
+      mode:'no-cors',
+      keepalive:true,
+      redirect:'follow'
+    });
     if(status==='completed') state.sent = true;
   }catch(e){}
 }
