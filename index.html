@@ -24,6 +24,11 @@
 <!-- Analytics: GoatCounter (cisgrid). No cookies, no personal data, no consent banner needed. -->
 <script data-goatcounter="https://cisgrid.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
+<!-- Typography: Design System Italia — Titillium Web (headings/UI), Lora (body). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --bg:#f6f4ef; --panel:#fffdf9; --ink:#1c1a17; --muted:#605a51; --line:#e5e0d6;
@@ -31,13 +36,18 @@
   --warn:#a8471f; --warn-soft:#f6e7de;
   --shadow:0 1px 2px rgba(28,26,23,.06),0 8px 24px rgba(28,26,23,.06);
   --radius:14px; --maxw:820px;
-  --sans:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
-  --serif:Georgia,"Times New Roman",serif;
+  --sans:"Titillium Web",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  --serif:"Titillium Web",system-ui,sans-serif;
+  --body:"Lora",Georgia,"Times New Roman",serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;
   -webkit-font-smoothing:antialiased;font-size:17px}
+/* Titillium Web on headings, brand and UI controls; Lora (body) everywhere else */
+h1,h2,h3,h4,.brand,nav.top a,.btn,button,label,input,select,textarea,.eyebrow,.tag,
+.score-pill,.who,.legend,.sc-n,.sc-l,#progLabel,.crumb,.toggle,.badge,.step .n,.chip{
+  font-family:var(--sans)}
 a{color:var(--accent-ink)}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
@@ -159,22 +169,41 @@ footer.site p{margin:.4rem 0}
 .consent .choice{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 
 /* report */
-.report-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:8px}
-.report-grid{display:grid;grid-template-columns:340px 1fr;gap:22px;align-items:start}
-@media(max-width:760px){.report-grid{grid-template-columns:1fr}}
-.radar-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);text-align:center}
-#radar{width:100%;height:auto;max-width:320px}
-.legend{font-size:.82rem;color:var(--muted);margin-top:6px}
-.dimreport{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px}
-.dimreport .rhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-.dimreport h4{margin:0;font-size:1.05rem}
+.report-top{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:24px 24px 22px;margin-bottom:18px;text-align:center}
+.report-top h3{font-family:var(--serif);font-size:1.55rem;margin:.1rem 0 .2rem}
+.overall{margin:18px 0 4px;line-height:1}
+.overall .lbl{display:block;color:var(--muted);font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:.5rem}
+.overall .num{font-family:var(--serif);font-weight:700;font-size:3.8rem;color:var(--accent-ink)}
+.overall .den{color:var(--muted);font-weight:600;font-size:1.3rem;margin-left:.1rem}
+.report-top .foot{color:var(--muted);font-size:.9rem;max-width:58ch;margin:14px auto 0}
+.attention{background:var(--accent-soft);border:1px solid #cfe3da;border-radius:12px;padding:14px 18px;margin:0 0 16px}
+.radar-wrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:18px 18px 20px;text-align:center;margin-bottom:16px}
+#radar{width:100%;height:auto;max-width:460px;touch-action:manipulation}
+.radar-hint{color:var(--muted);font-size:.92rem;margin:.5rem 0 0}
+.dimchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:.4rem .85rem;font-size:.9rem;
+  font-weight:600;cursor:pointer;color:var(--ink)}
+.chip:hover{border-color:var(--accent);background:var(--accent-soft)}
+.chip[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.chip .cs{font-weight:400;opacity:.75;margin-left:.35rem}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:14px;text-align:left}
+.detail .rhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.detail h4{margin:0;font-size:1.08rem}
 .score-pill{font-weight:700;font-size:.86rem;border-radius:999px;padding:.15rem .6rem;white-space:nowrap}
 .s-low{background:var(--warn-soft);color:var(--warn)}
 .s-mid{background:#f2ecd8;color:#6f5714}
 .s-high{background:var(--accent-soft);color:var(--accent-ink)}
-.verdict{font-weight:600;margin:.5rem 0 .2rem}
-.dimreport .brief{font-size:.95rem;color:#43403a}
-.priority{background:var(--accent-soft);border:1px solid #cfe3da;border-radius:12px;padding:14px 18px;margin:6px 0 18px}
+.verdict{font-weight:600;margin:.55rem 0 .3rem}
+.detail .brief{font-size:.95rem;color:#43403a}
+.legend-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:16px}
+.legend-box h5{margin:.1rem 0 .7rem;font-size:.95rem}
+.legend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:560px){.legend-grid{grid-template-columns:1fr}}
+.legend-grid > div{font-size:.9rem;color:#43403a;display:flex;gap:.5rem}
+.legend-grid .lv{flex:0 0 auto;width:22px;height:22px;border-radius:6px;background:var(--accent-soft);
+  color:var(--accent-ink);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.82rem}
 .center{text-align:center}
 .mono-note{font-size:.82rem;color:var(--muted)}
 .hidden{display:none!important}
@@ -637,6 +666,7 @@ function render(){
   if(typeof stopActiveMic==='function') stopActiveMic();
   ivInner.innerHTML='';
   ivActions.classList.remove('hidden');
+  document.getElementById('exitBtn').style.display='';   // restored (hidden only on the report)
 
   /* --- consent screen --- */
   if(state.q === -2){
@@ -841,176 +871,270 @@ function finishInterview(){
   renderReport();
 }
 
+/* Attention map — wording depends on how the six scores relate. */
+function attentionText(avgs){
+  const min = Math.min.apply(null, avgs);
+  const max = Math.max.apply(null, avgs);
+  const lows = DIMENSIONS.filter((_,i)=>Math.abs(avgs[i]-min)<0.001).map(d=>d.title);
+  const flat = (max - min) < 0.1;            // flat = all six dimensions equal (averages step by 0.2)
+  const b = s => '<b>'+s+'</b>';
+  const list = a => a.length<=1 ? a[0] : a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+
+  if(flat){
+    if(min < 1.0) return 'Your service scores evenly low across all six dimensions: there is no single weak point, the whole service is under-designed. Start where a fix is most feasible, and treat each dimension as an open design brief.';
+    if(min < 2.0) return 'Your profile is balanced at a moderate level: no dimension stands out as the weak point. The move is to deepen and document each one rather than pick a single priority.';
+    return 'Your profile is balanced and strong: all six dimensions are well designed. No dimension needs priority attention; focus on sustaining the evidence and auditing what already works.';
+  }
+
+  let msg;
+  if(lows.length===1)      msg = 'On your own answers, the dimension to look at first is '+b(lows[0])+'.';
+  else if(lows.length===2) msg = 'On your own answers, the two dimensions to look at first are '+b(lows[0])+' and '+b(lows[1])+'.';
+  else                     msg = 'On your own answers, several dimensions share the lowest score and need attention equally: '+b(list(lows))+'. Start with whichever is most feasible to fix.';
+  if(min >= 2.5) msg += ' Even your lowest dimension is systematically designed, so these are refinements, not gaps.';
+  return msg;
+}
+
+function legendFull(n){
+  return ['not addressed',
+          'partial and undocumented',
+          'addressed with documented evidence but limited in scope',
+          'addressed systematically, with full documentation and accountable feedback loops'][n];
+}
+
+let _reportAvgs = null, _selectedDim = 0;
+
 function renderReport(){
   stopSpeak();
   ivActions.classList.add('hidden');
-  const avgs = DIMENSIONS.map((_,i)=>dimAverage(i));
-  const overall = avgs.reduce((a,b)=>a+b,0)/avgs.length;
-  const order = avgs.map((v,i)=>({i,v})).sort((a,b)=>a.v-b.v);
-  const p1=DIMENSIONS[order[0].i].title, p2=DIMENSIONS[order[1].i].title;
+  // Interview is over: hide "Save and exit", fill the bar, label it Completed.
+  document.getElementById('exitBtn').style.display='none';
+  document.getElementById('progFill').style.width='100%';
+  document.getElementById('progLabel').textContent='Completed';
+  document.querySelector('.progress').setAttribute('aria-valuenow','100');
 
-  ivInner.innerHTML=`
-    <div class="report-head">
-      <div>
-        <div class="who" style="color:var(--accent-ink)">Design reading</div>
-        <h3 style="font-family:var(--serif);font-size:1.6rem;margin:.1rem 0">Where your service needs design attention</h3>
+  const avgs = DIMENSIONS.map((_,i)=>dimAverage(i));
+  _reportAvgs = avgs;
+  const overall = avgs.reduce((a,b)=>a+b,0)/avgs.length;
+  const minV = Math.min.apply(null, avgs);
+  _selectedDim = avgs.findIndex(v=>Math.abs(v-minV)<0.001);
+
+  ivInner.innerHTML = `
+    <div class="report-top">
+      <p class="eyebrow">Climate Information Services · design diagnostic</p>
+      <h3>Where your service needs design attention</h3>
+      <div class="overall">
+        <span class="lbl">Overall self-assessment</span>
+        <span class="num">${overall.toFixed(1)}</span><span class="den">/ 3</span>
       </div>
-      <div style="text-align:right">
-        <div class="note">Overall self-assessment</div>
-        <div style="font-size:1.5rem;font-weight:700">${overall.toFixed(1)}<span class="note" style="font-weight:400"> / 3</span></div>
+      <p class="foot">Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.</p>
+    </div>
+
+    <div class="attention"><b>Attention map.</b> This is not a grade. ${attentionText(avgs)}</div>
+
+    <div class="radar-wrap">
+      <canvas id="radar" width="680" height="680" role="img" aria-label="Radar of the six design dimensions"></canvas>
+      <p class="radar-hint">Click a dimension, on the radar or below, to read its diagnosis.</p>
+      <div class="dimchips" id="dimchips">
+        ${DIMENSIONS.map((d,i)=>`<button class="chip" data-i="${i}" aria-selected="false">${d.id} · ${d.title}<span class="cs">${avgs[i].toFixed(1)}</span></button>`).join('')}
+      </div>
+      <div class="detail" id="detail" aria-live="polite"></div>
+    </div>
+
+    <div class="legend-box">
+      <h5>How to read the 0–3 scale</h5>
+      <div class="legend-grid">
+        ${RUBRIC.map(r=>`<div><span class="lv">${r.n}</span><span>${legendFull(r.n)}</span></div>`).join('')}
       </div>
     </div>
-    <div class="priority">
-      <b>Attention map.</b> This is not a grade. On your own answers, the two dimensions to look at first are
-      <b>${p1}</b> and <b>${p2}</b>. The radar shows the shape; the briefs below say what to do.
-    </div>
-    <div class="report-grid">
-      <div class="radar-card">
-        <canvas id="radar" width="640" height="640" role="img" aria-label="Radar of the six design dimensions"></canvas>
-        <div class="legend">0 = not addressed · 3 = systematic with accountable feedback loops</div>
-      </div>
-      <div id="dimReports"></div>
-    </div>
-    <div class="center no-print" style="margin:26px 0 0;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+
+    <div class="center no-print" style="margin:24px 0 0;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
       <button class="btn" id="dlBtn">Download report (PDF)</button>
       <button class="btn ghost" id="printBtn">Print</button>
-      <button class="btn ghost" id="restartBtn">Start again</button>
-      <button class="btn ghost" id="doneBtn">Back to site</button>
-    </div>
-    <p class="center mono-note no-print" style="margin-top:12px">Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.</p>`;
+      <button class="btn ghost" id="doneBtn">Back to Home</button>
+    </div>`;
 
-  document.getElementById('dimReports').innerHTML = DIMENSIONS.map((d,i)=>{
-    const avg=avgs[i], v=verdictFor(avg);
-    const guidance = (avg<2.0)
-      ? `<div class="brief"><b>Watch for.</b> ${d.redFlag}</div>
-         <div class="brief" style="margin-top:.5rem"><b>Design brief.</b> ${d.brief}</div>`
-      : `<div class="brief"><b>Signal of good design.</b> ${d.goodSignal}</div>
-         <div class="brief" style="margin-top:.5rem"><b>To sustain it.</b> Keep the evidence current: ${d.signal}</div>`;
-    return `<div class="dimreport">
-      <div class="rhead"><h4>${d.id} · ${d.title}</h4>
-      <span class="score-pill ${v.cls}">${avg.toFixed(1)} / 3 · ${v.tag}</span></div>
-      <div class="verdict">${v.head}</div>${guidance}</div>`;
-  }).join('');
-
-  drawRadar(document.getElementById('radar'), avgs);
-  document.getElementById('printBtn').addEventListener('click', ()=>window.print());
-  document.getElementById('restartBtn').addEventListener('click', ()=>{ clearLocal(); startInterview(null); });
-  document.getElementById('doneBtn').addEventListener('click', closeOverlay);
+  const canvas=document.getElementById('radar');
+  canvas.addEventListener('click', (e)=>{ const k=nearestAxis(e,canvas); if(k>=0) selectDim(k); });
+  ivInner.querySelectorAll('.chip').forEach(c=>c.addEventListener('click', ()=>selectDim(Number(c.dataset.i))));
   document.getElementById('dlBtn').addEventListener('click', downloadPDF);
-  updateProgress();
+  document.getElementById('printBtn').addEventListener('click', printPDF);
+  document.getElementById('doneBtn').addEventListener('click', closeOverlay);
+
+  selectDim(_selectedDim);
   document.querySelector('.iv-body').scrollTop=0;
 }
 
-function drawRadar(canvas, avgs){
-  const ctx=canvas.getContext('2d');
-  const dpr=window.devicePixelRatio||1, size=640;
-  canvas.width=size*dpr; canvas.height=size*dpr; canvas.style.maxWidth='320px';
-  ctx.scale(dpr,dpr); ctx.clearRect(0,0,size,size);
-  const cx=size/2, cy=size/2, R=205, N=6, maxV=3, start=-Math.PI/2;
-  const ang=k=>start+k*2*Math.PI/N;
-  const pt=(k,r)=>[cx+r*Math.cos(ang(k)), cy+r*Math.sin(ang(k))];
+function selectDim(i){
+  _selectedDim=i;
+  drawRadar(document.getElementById('radar'), _reportAvgs, i);
+  const d=DIMENSIONS[i], avg=_reportAvgs[i], v=verdictFor(avg);
+  const guidance = (avg<2.0)
+    ? `<div class="brief"><b>Watch for.</b> ${d.redFlag}</div>
+       <div class="brief" style="margin-top:.5rem"><b>Design brief.</b> ${d.brief}</div>`
+    : `<div class="brief"><b>Signal of good design.</b> ${d.goodSignal}</div>
+       <div class="brief" style="margin-top:.5rem"><b>To sustain it.</b> Keep the evidence current: ${d.signal}</div>`;
+  document.getElementById('detail').innerHTML =
+    `<div class="rhead"><h4>${d.id} · ${d.title}</h4>
+     <span class="score-pill ${v.cls}">${avg.toFixed(1)} / 3 · ${v.tag}</span></div>
+     <div class="verdict">${v.head}</div>${guidance}`;
+  ivInner.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-selected', Number(c.dataset.i)===i ? 'true':'false'));
+}
 
+const RADAR = {size:680, R:210, N:6, start:-Math.PI/2};
+function radarAngle(k){ return RADAR.start + k*2*Math.PI/RADAR.N; }
+
+function drawRadar(canvas, avgs, selected){
+  if(selected===undefined) selected=-1;
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1, size=RADAR.size;
+  canvas.width=size*dpr; canvas.height=size*dpr;
+  ctx.scale(dpr,dpr); ctx.clearRect(0,0,size,size);
+  const cx=size/2, cy=size/2, R=RADAR.R, N=RADAR.N, maxV=3;
+  const pt=(k,r)=>[cx+r*Math.cos(radarAngle(k)), cy+r*Math.sin(radarAngle(k))];
+
+  // rings
   ctx.lineWidth=1;
   for(let ring=1;ring<=maxV;ring++){
-    const rr=R*ring/maxV;
-    ctx.beginPath();
+    const rr=R*ring/maxV; ctx.beginPath();
     for(let k=0;k<N;k++){ const[x,y]=pt(k,rr); k?ctx.lineTo(x,y):ctx.moveTo(x,y); }
-    ctx.closePath();
-    ctx.strokeStyle = ring===maxV?'#c9c1b4':'#e5e0d6';
-    ctx.stroke();
+    ctx.closePath(); ctx.strokeStyle=ring===maxV?'#c9c1b4':'#e5e0d6'; ctx.stroke();
   }
-  ctx.strokeStyle='#e5e0d6';
-  for(let k=0;k<N;k++){ const[x,y]=pt(k,R); ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.stroke(); }
-
+  // spokes, with the selected axis highlighted
+  for(let k=0;k<N;k++){ const[x,y]=pt(k,R);
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y);
+    ctx.strokeStyle = k===selected ? '#2f6f5e' : '#e5e0d6';
+    ctx.lineWidth   = k===selected ? 2 : 1; ctx.stroke();
+  }
+  // data polygon
   ctx.beginPath();
   for(let k=0;k<N;k++){ const[x,y]=pt(k,R*(avgs[k]/maxV)); k?ctx.lineTo(x,y):ctx.moveTo(x,y); }
   ctx.closePath();
-  ctx.fillStyle='rgba(47,111,94,.22)'; ctx.strokeStyle='#2f6f5e'; ctx.lineWidth=2.5;
-  ctx.fill(); ctx.stroke();
+  ctx.fillStyle='rgba(47,111,94,.20)'; ctx.strokeStyle='#2f6f5e'; ctx.lineWidth=2.5; ctx.fill(); ctx.stroke();
+  // vertices
   for(let k=0;k<N;k++){ const[x,y]=pt(k,R*(avgs[k]/maxV));
-    ctx.beginPath(); ctx.arc(x,y,4,0,2*Math.PI); ctx.fillStyle='#1d4a3e'; ctx.fill(); }
-
+    ctx.beginPath(); ctx.arc(x,y, k===selected?7:4.5, 0, 2*Math.PI);
+    ctx.fillStyle = k===selected ? '#a8471f' : '#1d4a3e'; ctx.fill();
+    if(k===selected){ ctx.lineWidth=2; ctx.strokeStyle='#fff'; ctx.stroke(); }
+  }
+  // labels
   ctx.textAlign='center'; ctx.textBaseline='middle';
   DIMENSIONS.forEach((d,k)=>{
-    const[x,y]=pt(k,R+34), words=d.axis.split(' ');
-    ctx.fillStyle='#1c1a17'; ctx.font='700 19px "Segoe UI",system-ui,sans-serif';
-    if(words.length>1){ ctx.fillText(words[0],x,y-11); ctx.fillText(words.slice(1).join(' '),x,y+11); }
+    const[x,y]=pt(k,R+42), words=d.axis.split(' '), sel=k===selected;
+    ctx.fillStyle = sel ? '#1d4a3e' : '#1c1a17';
+    ctx.font = (sel?'700':'600')+' 20px "Titillium Web",system-ui,sans-serif';
+    if(words.length>1){ ctx.fillText(words[0],x,y-12); ctx.fillText(words.slice(1).join(' '),x,y+12); }
     else ctx.fillText(d.axis,x,y);
-    ctx.fillStyle='#2f6f5e'; ctx.font='700 16px "Segoe UI",system-ui,sans-serif';
-    ctx.fillText(avgs[k].toFixed(1), x, y+(words.length>1?30:22));
+    ctx.fillStyle = sel ? '#a8471f' : '#2f6f5e';
+    ctx.font='700 17px "Titillium Web",system-ui,sans-serif';
+    ctx.fillText(avgs[k].toFixed(1), x, y+(words.length>1?32:22));
   });
+}
+
+// Map a click on the radar to the nearest axis (or -1 near the centre).
+function nearestAxis(e, canvas){
+  const rect=canvas.getBoundingClientRect(), size=RADAR.size;
+  const x=(e.clientX-rect.left)*(size/rect.width) - size/2;
+  const y=(e.clientY-rect.top)*(size/rect.height) - size/2;
+  if(Math.hypot(x,y) < 26) return -1;
+  const a=Math.atan2(y,x);
+  let best=-1, bestD=1e9;
+  for(let k=0;k<RADAR.N;k++){
+    const diff=Math.abs(((a-radarAngle(k)+Math.PI)%(2*Math.PI))-Math.PI);
+    if(diff<bestD){ bestD=diff; best=k; }
+  }
+  return best;
 }
 
 /* ---------- PDF ---------- */
 function loadScript(src){
   return new Promise((res,rej)=>{ const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); });
 }
+async function ensureJsPDF(){
+  if(!(window.jspdf && window.jspdf.jsPDF)){
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+  }
+  return window.jspdf.jsPDF;
+}
+
+// Single source of truth for the document — used by both Download and Print,
+// so the printed page is exactly the downloaded PDF.
+async function buildPdfDoc(){
+  const jsPDF = await ensureJsPDF();
+  const doc = new jsPDF({unit:'pt',format:'a4'});
+  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), M=48;
+  let y=54;
+  const avgs = _reportAvgs || DIMENSIONS.map((_,i)=>dimAverage(i));
+  const overall=(avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1);
+
+  doc.setFont('helvetica','bold'); doc.setFontSize(17);
+  doc.text('CIS Grid — design diagnostic', M, y); y+=22;
+  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(110);
+  doc.text('Heuristic self-assessment of a Climate Information Service · overall '+overall+' / 3', M, y); y+=14;
+  doc.text('Generated '+new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})+' · cisgrid.org', M, y);
+  doc.setTextColor(20); y+=12;
+
+  // clean radar (no selection highlight), rendered off-screen
+  const tmp=document.createElement('canvas'); drawRadar(tmp, avgs, -1);
+  const img=tmp.toDataURL('image/png');
+  const iw=250, ih=250;
+  doc.addImage(img,'PNG',(W-iw)/2,y,iw,ih); y+=ih+8;
+  doc.setFontSize(8); doc.setTextColor(120);
+  doc.text('0 = not addressed   ·   3 = systematic with accountable feedback loops', W/2, y, {align:'center'});
+  doc.setTextColor(20); y+=18;
+
+  DIMENSIONS.forEach((d,i)=>{
+    const avg=avgs[i], v=verdictFor(avg);
+    const guidance = (avg<2.0)
+      ? [['Watch for. ', d.redFlag],['Design brief. ', d.brief]]
+      : [['Signal of good design. ', d.goodSignal],['To sustain it. Keep the evidence current: ', d.signal]];
+    let need=46;
+    guidance.forEach(g=>{ need += doc.splitTextToSize(g[0]+g[1], W-2*M).length*12+4; });
+    if(y+need > H-50){ doc.addPage(); y=54; }
+
+    doc.setFont('helvetica','bold'); doc.setFontSize(12);
+    doc.text(`${d.id} · ${d.title}`, M, y);
+    doc.setFontSize(11);
+    if(v.cls==='s-low') doc.setTextColor(168,71,31);
+    else if(v.cls==='s-mid') doc.setTextColor(111,87,20);
+    else doc.setTextColor(29,74,62);
+    doc.text(`${avg.toFixed(1)} / 3 · ${v.tag}`, W-M, y, {align:'right'});
+    doc.setTextColor(20); y+=15;
+    doc.setFont('helvetica','italic'); doc.setFontSize(9.5);
+    doc.text(doc.splitTextToSize(v.head, W-2*M), M, y); y+=13;
+    doc.setFont('helvetica','normal');
+    guidance.forEach(g=>{
+      const lines=doc.splitTextToSize(g[0]+g[1], W-2*M);
+      doc.text(lines, M, y); y += lines.length*12+4;
+    });
+    y+=8;
+  });
+
+  doc.setFontSize(8); doc.setTextColor(120);
+  doc.text('Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.', M, H-28);
+  return doc;
+}
+
 async function downloadPDF(){
   state.downloaded = true;
   track('report-download','Report downloaded');
   if(state.consent===true){ state.sent=false; sendToCollector('completed'); } // update the record with the download flag
-  const btn=document.getElementById('dlBtn'), old=btn.textContent;
-  btn.textContent='Preparing…'; btn.disabled=true;
+  const btn=document.getElementById('dlBtn'), old=btn.textContent; btn.textContent='Preparing…'; btn.disabled=true;
+  try{ const doc=await buildPdfDoc(); doc.save('cis-grid-design-diagnostic.pdf'); }
+  catch(e){ alert('The PDF could not be generated. Please try again.'); }
+  finally{ btn.textContent=old; btn.disabled=false; }
+}
+
+async function printPDF(){
+  track('report-print','Report printed');
+  const btn=document.getElementById('printBtn'), old=btn.textContent; btn.textContent='Preparing…'; btn.disabled=true;
   try{
-    if(!(window.jspdf && window.jspdf.jsPDF)){
-      await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-    }
-    const {jsPDF}=window.jspdf;
-    const doc=new jsPDF({unit:'pt',format:'a4'});
-    const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), M=48;
-    let y=54;
-    const avgs=DIMENSIONS.map((_,i)=>dimAverage(i));
-    const overall=(avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1);
-
-    doc.setFont('helvetica','bold'); doc.setFontSize(17);
-    doc.text('CIS Grid — design reading', M, y); y+=22;
-    doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(110);
-    doc.text('Heuristic self-assessment of a Climate Information Service · overall '+overall+' / 3', M, y); y+=14;
-    doc.text('Generated '+new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})+' · cisgrid.org', M, y);
-    doc.setTextColor(20); y+=12;
-
-    const img=document.getElementById('radar').toDataURL('image/png');
-    const iw=250, ih=250;
-    doc.addImage(img,'PNG',(W-iw)/2,y,iw,ih); y+=ih+8;
-    doc.setFontSize(8); doc.setTextColor(120);
-    doc.text('0 = not addressed   ·   3 = systematic with accountable feedback loops', W/2, y, {align:'center'});
-    doc.setTextColor(20); y+=18;
-
-    DIMENSIONS.forEach((d,i)=>{
-      const avg=avgs[i], v=verdictFor(avg);
-      const guidance = (avg<2.0)
-        ? [['Watch for. ', d.redFlag],['Design brief. ', d.brief]]
-        : [['Signal of good design. ', d.goodSignal],['To sustain it. Keep the evidence current: ', d.signal]];
-      let need=46;
-      guidance.forEach(g=>{ need += doc.splitTextToSize(g[0]+g[1], W-2*M).length*12+4; });
-      if(y+need > H-50){ doc.addPage(); y=54; }
-
-      doc.setFont('helvetica','bold'); doc.setFontSize(12);
-      doc.text(`${d.id} · ${d.title}`, M, y);
-      doc.setFontSize(11);
-      if(v.cls==='s-low') doc.setTextColor(168,71,31);
-      else if(v.cls==='s-mid') doc.setTextColor(111,87,20);
-      else doc.setTextColor(29,74,62);
-      doc.text(`${avg.toFixed(1)} / 3 · ${v.tag}`, W-M, y, {align:'right'});
-      doc.setTextColor(20); y+=15;
-      doc.setFont('helvetica','italic'); doc.setFontSize(9.5);
-      doc.text(doc.splitTextToSize(v.head, W-2*M), M, y); y+=13;
-      doc.setFont('helvetica','normal');
-      guidance.forEach(g=>{
-        const lines=doc.splitTextToSize(g[0]+g[1], W-2*M);
-        doc.text(lines, M, y); y += lines.length*12+4;
-      });
-      y+=8;
-    });
-
-    doc.setFontSize(8); doc.setTextColor(120);
-    doc.text('Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.', M, H-28);
-    doc.save('cis-grid-design-reading.pdf');
-  }catch(e){
-    window.print();
-  }finally{
-    btn.textContent=old; btn.disabled=false;
-  }
+    const doc=await buildPdfDoc();
+    doc.autoPrint();
+    const url=doc.output('bloburl');
+    const w=window.open(url,'_blank');
+    if(!w) doc.save('cis-grid-design-diagnostic.pdf');   // popup blocked → download instead
+  }catch(e){ window.print(); }
+  finally{ btn.textContent=old; btn.disabled=false; }
 }
 
 /* Enter advances when a score is chosen */

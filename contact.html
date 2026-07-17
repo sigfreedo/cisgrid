@@ -10,16 +10,21 @@
 <meta name="robots" content="index,follow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7-12-7V9z' fill='%232f6f5e'/%3E%3Cpath d='M16 8l7 4v8l-7 4-7-4v-8z' fill='%23f6f4ef'/%3E%3C/svg%3E">
 <script data-goatcounter="https://cisgrid.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f6f4ef; --panel:#fffdf9; --ink:#1c1a17; --muted:#605a51; --line:#e5e0d6;
   --accent:#2f6f5e; --accent-soft:#e4efe9; --accent-ink:#1d4a3e; --warn:#a8471f; --warn-soft:#f6e7de;
   --shadow:0 1px 2px rgba(28,26,23,.06),0 8px 24px rgba(28,26,23,.06);
   --radius:14px; --maxw:820px;
-  --sans:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; --serif:Georgia,"Times New Roman",serif;
+  --sans:"Titillium Web",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif; --serif:"Titillium Web",system-ui,sans-serif;
+  --body:"Lora",Georgia,"Times New Roman",serif;
 }
 *{box-sizing:border-box} html,body{margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased;font-size:17px}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;font-size:17px}
+h1,h2,h3,.brand,nav.top a,.btn,.badge,.crumb,label,input,select,textarea,.opt{font-family:var(--sans)}
 a{color:var(--accent-ink)} :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 button{font-family:inherit;font-size:1rem;cursor:pointer}
