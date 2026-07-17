@@ -168,42 +168,52 @@ footer.site p{margin:.4rem 0}
 .consent li{margin:.3rem 0;font-size:.97rem}
 .consent .choice{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 
-/* report */
-.report-top{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:24px 24px 22px;margin-bottom:18px;text-align:center}
-.report-top h3{font-family:var(--serif);font-size:1.55rem;margin:.1rem 0 .2rem}
-.overall{margin:18px 0 4px;line-height:1}
-.overall .lbl{display:block;color:var(--muted);font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:.5rem}
-.overall .num{font-family:var(--serif);font-weight:700;font-size:3.8rem;color:var(--accent-ink)}
-.overall .den{color:var(--muted);font-weight:600;font-size:1.3rem;margin-left:.1rem}
-.report-top .foot{color:var(--muted);font-size:.9rem;max-width:58ch;margin:14px auto 0}
-.attention{background:var(--accent-soft);border:1px solid #cfe3da;border-radius:12px;padding:14px 18px;margin:0 0 16px}
-.radar-wrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:18px 18px 20px;text-align:center;margin-bottom:16px}
-#radar{width:100%;height:auto;max-width:460px;touch-action:manipulation}
-.radar-hint{color:var(--muted);font-size:.92rem;margin:.5rem 0 0}
-.dimchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px}
+/* report — type scale: 1.5 title · 1.05 h4 · 1 body · .9 small · .8 micro · 3 number */
+.report-head{margin:0 0 16px}
+.report-head .eyebrow{margin-bottom:.4rem}
+.report-head h3{font-family:var(--serif);font-size:1.5rem;line-height:1.2;margin:0}
+.attention{background:var(--accent-soft);border:1px solid #cfe3da;border-radius:12px;padding:16px 18px;margin:0 0 18px}
+.attention .k{display:block;font-family:var(--sans);font-weight:700;color:var(--accent-ink);
+  font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem}
+.attention p{margin:0;color:#3a3630;font-size:1rem;line-height:1.6}
+.mapcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:24px}
+.ohead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.overall{line-height:1}
+.overall .lbl{display:block;color:var(--muted);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-bottom:.35rem}
+.overall .num{font-family:var(--serif);font-weight:700;font-size:3rem;color:var(--accent-ink);line-height:1}
+.overall .den{color:var(--muted);font-weight:600;font-size:1.1rem;margin-left:.15rem}
+.scale-tip{position:relative}
+.scale-tip > button{border:1px solid var(--line);background:#fff;border-radius:999px;font-family:var(--sans);
+  font-weight:600;font-size:.8rem;padding:.35rem .7rem;color:var(--accent-ink);cursor:pointer;
+  display:inline-flex;align-items:center;gap:.35rem}
+.scale-tip > button:hover{background:var(--accent-soft);border-color:var(--accent)}
+.scale-tip > button .ic{width:16px;height:16px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);
+  display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;font-style:italic}
+.scale-pop{position:absolute;right:0;top:calc(100% + 8px);z-index:6;width:300px;max-width:82vw;
+  background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:14px 16px;text-align:left}
+.scale-pop[hidden]{display:none}
+.scale-pop h5{margin:0 0 .6rem;font-size:.85rem}
+.scale-row{display:flex;gap:.55rem;margin:.4rem 0;font-size:.85rem;color:#43403a;line-height:1.4}
+.scale-row .lv,.legend-lv{flex:0 0 auto;width:20px;height:20px;border-radius:6px;background:var(--accent-soft);
+  color:var(--accent-ink);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.78rem}
+#radar{display:block;width:100%;height:auto;max-width:420px;margin:16px auto 0;touch-action:manipulation}
+.radar-hint{color:var(--muted);font-size:.8rem;margin:14px 0 0;text-align:center}
+.dimchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
 .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:.4rem .85rem;font-size:.9rem;
   font-weight:600;cursor:pointer;color:var(--ink)}
 .chip:hover{border-color:var(--accent);background:var(--accent-soft)}
 .chip[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
 .chip .cs{font-weight:400;opacity:.75;margin-left:.35rem}
-.detail{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:14px;text-align:left}
+.detail{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:24px;text-align:left}
 .detail .rhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
-.detail h4{margin:0;font-size:1.08rem}
-.score-pill{font-weight:700;font-size:.86rem;border-radius:999px;padding:.15rem .6rem;white-space:nowrap}
+.detail h4{margin:0;font-size:1.05rem}
+.score-pill{font-weight:700;font-size:.8rem;border-radius:999px;padding:.15rem .6rem;white-space:nowrap}
 .s-low{background:var(--warn-soft);color:var(--warn)}
 .s-mid{background:#f2ecd8;color:#6f5714}
 .s-high{background:var(--accent-soft);color:var(--accent-ink)}
-.verdict{font-weight:600;margin:.55rem 0 .3rem}
-.detail .brief{font-size:.95rem;color:#43403a}
-.legend-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:16px}
-.legend-box h5{margin:.1rem 0 .7rem;font-size:.95rem}
-.legend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-@media(max-width:560px){.legend-grid{grid-template-columns:1fr}}
-.legend-grid > div{font-size:.9rem;color:#43403a;display:flex;gap:.5rem}
-.legend-grid .lv{flex:0 0 auto;width:22px;height:22px;border-radius:6px;background:var(--accent-soft);
-  color:var(--accent-ink);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.82rem}
+.verdict{font-weight:600;margin:.55rem 0 .35rem;font-size:1rem}
+.detail .brief{font-size:.95rem;color:#43403a;line-height:1.55}
 .center{text-align:center}
 .mono-note{font-size:.82rem;color:var(--muted)}
 .hidden{display:none!important}
@@ -919,32 +929,37 @@ function renderReport(){
   _selectedDim = avgs.findIndex(v=>Math.abs(v-minV)<0.001);
 
   ivInner.innerHTML = `
-    <div class="report-top">
+    <div class="report-head">
       <p class="eyebrow">Climate Information Services · design diagnostic</p>
       <h3>Where your service needs design attention</h3>
-      <div class="overall">
-        <span class="lbl">Overall self-assessment</span>
-        <span class="num">${overall.toFixed(1)}</span><span class="den">/ 3</span>
-      </div>
-      <p class="foot">Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.</p>
+      <p class="section-sub" style="margin:.5rem 0 0">Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.</p>
     </div>
 
-    <div class="attention"><b>Attention map.</b> This is not a grade. ${attentionText(avgs)}</div>
+    <div class="attention">
+      <span class="k">Attention map</span>
+      <p>This is not a grade. ${attentionText(avgs)}</p>
+    </div>
 
-    <div class="radar-wrap">
+    <div class="mapcard">
+      <div class="ohead">
+        <div class="overall">
+          <span class="lbl">Overall self-assessment</span>
+          <span class="num">${overall.toFixed(1)}</span><span class="den">/ 3</span>
+        </div>
+        <div class="scale-tip">
+          <button id="scaleBtn" type="button" aria-expanded="false" aria-controls="scalePop"><span class="ic" aria-hidden="true">i</span> How to read the scale</button>
+          <div class="scale-pop" id="scalePop" hidden role="dialog" aria-label="How to read the 0 to 3 scale">
+            <h5>The 0–3 scale</h5>
+            ${RUBRIC.map(r=>`<div class="scale-row"><span class="lv">${r.n}</span><span>${legendFull(r.n)}</span></div>`).join('')}
+          </div>
+        </div>
+      </div>
       <canvas id="radar" width="680" height="680" role="img" aria-label="Radar of the six design dimensions"></canvas>
       <p class="radar-hint">Click a dimension, on the radar or below, to read its diagnosis.</p>
       <div class="dimchips" id="dimchips">
         ${DIMENSIONS.map((d,i)=>`<button class="chip" data-i="${i}" aria-selected="false">${d.id} · ${d.title}<span class="cs">${avgs[i].toFixed(1)}</span></button>`).join('')}
       </div>
       <div class="detail" id="detail" aria-live="polite"></div>
-    </div>
-
-    <div class="legend-box">
-      <h5>How to read the 0–3 scale</h5>
-      <div class="legend-grid">
-        ${RUBRIC.map(r=>`<div><span class="lv">${r.n}</span><span>${legendFull(r.n)}</span></div>`).join('')}
-      </div>
     </div>
 
     <div class="center no-print" style="margin:24px 0 0;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
@@ -959,6 +974,19 @@ function renderReport(){
   document.getElementById('dlBtn').addEventListener('click', downloadPDF);
   document.getElementById('printBtn').addEventListener('click', printPDF);
   document.getElementById('doneBtn').addEventListener('click', closeOverlay);
+
+  const scaleBtn=document.getElementById('scaleBtn'), scalePop=document.getElementById('scalePop');
+  scaleBtn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const show = scalePop.hasAttribute('hidden');
+    scalePop.toggleAttribute('hidden', !show);
+    scaleBtn.setAttribute('aria-expanded', show?'true':'false');
+  });
+  document.querySelector('.iv-body').addEventListener('click', (e)=>{
+    if(!scalePop.hasAttribute('hidden') && !scalePop.contains(e.target) && !scaleBtn.contains(e.target)){
+      scalePop.setAttribute('hidden',''); scaleBtn.setAttribute('aria-expanded','false');
+    }
+  });
 
   selectDim(_selectedDim);
   document.querySelector('.iv-body').scrollTop=0;
