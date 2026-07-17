@@ -200,9 +200,10 @@ footer.site p{margin:.4rem 0}
   color:var(--accent-ink);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.78rem}
 #radar{display:block;width:100%;height:auto;max-width:420px;margin:16px auto 0;touch-action:manipulation}
 .radar-hint{color:var(--muted);font-size:.8rem;margin:14px 0 0;text-align:center}
-.dimchips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px}
-.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:.4rem .85rem;font-size:.9rem;
-  font-weight:600;cursor:pointer;color:var(--ink)}
+.dimchips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:24px}
+@media(max-width:560px){.dimchips{grid-template-columns:repeat(2,1fr)}}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:.45rem .7rem;font-size:.9rem;
+  font-weight:600;cursor:pointer;color:var(--ink);text-align:center}
 .chip:hover{border-color:var(--accent);background:var(--accent-soft)}
 .chip[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
 .chip .cs{font-weight:400;opacity:.75;margin-left:.35rem}
@@ -1092,56 +1093,85 @@ async function ensureJsPDF(){
 async function buildPdfDoc(){
   const jsPDF = await ensureJsPDF();
   const doc = new jsPDF({unit:'pt',format:'a4'});
-  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), M=48;
-  let y=54;
+  const W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), M=42, CW=W-2*M;
   const avgs = _reportAvgs || DIMENSIONS.map((_,i)=>dimAverage(i));
-  const overall=(avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1);
+  const dateStr = new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'});
+  const C={ink:[28,26,23],muted:[96,90,81],soft:[67,64,58],accent:[47,111,94],accentInk:[29,74,62],
+    accentSoft:[228,239,233],line:[210,205,192],lineSoft:[229,224,214],warn:[168,71,31],amber:[111,87,20],cream:[246,244,239]};
+  const setFill=c=>doc.setFillColor(c[0],c[1],c[2]), setText=c=>doc.setTextColor(c[0],c[1],c[2]), setDraw=c=>doc.setDrawColor(c[0],c[1],c[2]);
+  const polygon=(pts,style)=>{const s=[];for(let i=1;i<pts.length;i++)s.push([pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]]);doc.lines(s,pts[0][0],pts[0][1],[1,1],style,true);};
+  const hex=(cx,cy,r)=>{const p=[];for(let k=0;k<6;k++){const a=-Math.PI/2+k*Math.PI/3;p.push([cx+r*Math.cos(a),cy+r*Math.sin(a)]);}return p;};
 
-  doc.setFont('helvetica','bold'); doc.setFontSize(17);
-  doc.text('CIS Grid — design diagnostic', M, y); y+=22;
-  doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(110);
-  doc.text('Heuristic self-assessment of a Climate Information Service · overall '+overall+' / 3', M, y); y+=14;
-  doc.text('Generated '+new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})+' · cisgrid.org', M, y);
-  doc.setTextColor(20); y+=12;
+  function layoutRich(w,label,text){
+    doc.setFont('helvetica','bold'); const lw=doc.getTextWidth(label+' '); doc.setFont('helvetica','normal');
+    const words=text.split(/\s+/), lines=[]; let cur='', first=true;
+    for(const word of words){ const test=cur?cur+' '+word:word, avail=first?w-lw:w;
+      if(doc.getTextWidth(test)>avail && cur){ lines.push(cur); cur=word; first=false; } else cur=test; }
+    if(cur) lines.push(cur); return {label,lw,lines};
+  }
+  function drawRich(x,y,o,lh){
+    doc.setFont('helvetica','bold'); setText(C.ink); doc.text(o.label,x,y);
+    doc.setFont('helvetica','normal'); setText(C.soft); if(o.lines.length) doc.text(o.lines[0],x+o.lw,y);
+    for(let i=1;i<o.lines.length;i++) doc.text(o.lines[i],x,y+i*lh); return y+o.lines.length*lh;
+  }
+  function radar(cx,cy,R){
+    const N=6,maxV=3,start=-Math.PI/2,ang=k=>start+k*2*Math.PI/N,pt=(k,r)=>[cx+r*Math.cos(ang(k)),cy+r*Math.sin(ang(k))];
+    for(let ring=1;ring<=maxV;ring++){const rr=R*ring/maxV,pts=[];for(let k=0;k<N;k++)pts.push(pt(k,rr));
+      setDraw(ring===maxV?[201,193,180]:C.lineSoft); doc.setLineWidth(ring===maxV?0.8:0.5); polygon(pts,'S');}
+    setDraw(C.lineSoft); doc.setLineWidth(0.5); for(let k=0;k<N;k++){const[x,y]=pt(k,R);doc.line(cx,cy,x,y);}
+    const dp=[];for(let k=0;k<N;k++)dp.push(pt(k,R*(avgs[k]/maxV)));
+    setFill(C.accent); try{doc.setGState(new doc.GState({opacity:0.18}));}catch(e){} polygon(dp,'F');
+    try{doc.setGState(new doc.GState({opacity:1}));}catch(e){}
+    setDraw(C.accent); doc.setLineWidth(1.6); polygon(dp,'S');
+    setFill(C.accentInk); for(let k=0;k<N;k++){const[x,y]=pt(k,R*(avgs[k]/maxV));doc.circle(x,y,1.8,'F');}
+    doc.setFontSize(8);
+    DIMENSIONS.forEach((d,k)=>{const[lx,ly]=pt(k,R+15),words=d.axis.split(' '),c=Math.cos(ang(k)); let align=Math.abs(c)<0.3?'center':(c>0?'left':'right');
+      setText(C.ink); doc.setFont('helvetica','bold');
+      if(words.length>1){doc.text(words[0],lx,ly-3,{align});doc.text(words.slice(1).join(' '),lx,ly+6,{align}); setText(C.accent);doc.text(avgs[k].toFixed(1),lx,ly+15,{align});}
+      else{doc.text(d.axis,lx,ly,{align}); setText(C.accent);doc.text(avgs[k].toFixed(1),lx,ly+10,{align});}});
+  }
 
-  // clean radar (no selection highlight), rendered off-screen
-  const tmp=document.createElement('canvas'); drawRadar(tmp, avgs, -1);
-  const img=tmp.toDataURL('image/png');
-  const iw=250, ih=250;
-  doc.addImage(img,'PNG',(W-iw)/2,y,iw,ih); y+=ih+8;
-  doc.setFontSize(8); doc.setTextColor(120);
-  doc.text('0 = not addressed   ·   3 = systematic with accountable feedback loops', W/2, y, {align:'center'});
-  doc.setTextColor(20); y+=18;
+  let y=50;
+  setFill(C.accent); polygon(hex(M+9,y-3,9),'F'); setFill(C.cream); polygon(hex(M+9,y-3,4.7),'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(16); setText(C.ink); doc.text('CIS Grid — Design Diagnostic', M+26, y+1);
+  y+=16; doc.setFont('helvetica','normal'); doc.setFontSize(9.5); setText(C.muted);
+  doc.text('Heuristic self-assessment of a Climate Information Service', M, y); y+=12;
+  doc.text('Generated '+dateStr+' · cisgrid.org', M, y); y+=14;
 
-  DIMENSIONS.forEach((d,i)=>{
-    const avg=avgs[i], v=verdictFor(avg);
-    const guidance = (avg<2.0)
-      ? [['Watch for. ', d.redFlag],['Design brief. ', d.brief]]
-      : [['Signal of good design. ', d.goodSignal],['To sustain it. Keep the evidence current: ', d.signal]];
-    let need=46;
-    guidance.forEach(g=>{ need += doc.splitTextToSize(g[0]+g[1], W-2*M).length*12+4; });
-    if(y+need > H-50){ doc.addPage(); y=54; }
+  const at='This is not a grade. '+attentionText(avgs).replace(/<\/?b>/g,'');
+  doc.setFont('helvetica','normal'); doc.setFontSize(10); const aLines=doc.splitTextToSize(at, CW-28); const aH=18+aLines.length*13+14;
+  setFill(C.accentSoft); doc.roundedRect(M,y,CW,aH,6,6,'F');
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setText(C.accentInk); doc.text('ATTENTION MAP', M+14, y+16);
+  doc.setFont('helvetica','normal'); doc.setFontSize(10); setText(C.soft); doc.text(aLines, M+14, y+30); y+=aH+14;
 
-    doc.setFont('helvetica','bold'); doc.setFontSize(12);
-    doc.text(`${d.id} · ${d.title}`, M, y);
-    doc.setFontSize(11);
-    if(v.cls==='s-low') doc.setTextColor(168,71,31);
-    else if(v.cls==='s-mid') doc.setTextColor(111,87,20);
-    else doc.setTextColor(29,74,62);
-    doc.text(`${avg.toFixed(1)} / 3 · ${v.tag}`, W-M, y, {align:'right'});
-    doc.setTextColor(20); y+=15;
-    doc.setFont('helvetica','italic'); doc.setFontSize(9.5);
-    doc.text(doc.splitTextToSize(v.head, W-2*M), M, y); y+=13;
-    doc.setFont('helvetica','normal');
-    guidance.forEach(g=>{
-      const lines=doc.splitTextToSize(g[0]+g[1], W-2*M);
-      doc.text(lines, M, y); y += lines.length*12+4;
-    });
-    y+=8;
-  });
+  const overall=(avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1); const R=88, oH=58+2*R+18;
+  setDraw(C.line); doc.setLineWidth(0.8); doc.roundedRect(M,y,CW,oH,6,6,'S');
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setText(C.muted); doc.text('OVERALL SELF-ASSESSMENT', M+16, y+20);
+  doc.setFont('helvetica','bold'); doc.setFontSize(22); setText(C.accentInk); doc.text(overall+' / 3', M+16, y+44);
+  radar(M+CW/2, y+56+R, R); y+=oH+14;
 
-  doc.setFontSize(8); doc.setTextColor(120);
-  doc.text('A formative, heuristic reading: it turns each under-designed dimension into a design brief to act on, rather than scoring the service.', M, H-28);
+  const sH=18+4*13+10; setDraw(C.line); doc.setLineWidth(0.8); doc.roundedRect(M,y,CW,sH,6,6,'S');
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setText(C.muted); doc.text('HOW TO READ THE 0–3 SCALE', M+16, y+16);
+  let sy=y+30; [0,1,2,3].forEach(n=>{ doc.setFont('helvetica','bold'); doc.setFontSize(9); setText(C.accentInk); doc.text(String(n),M+16,sy);
+    doc.setFont('helvetica','normal'); setText(C.soft); doc.text(legendFull(n),M+30,sy); sy+=13; }); y+=sH+14;
+
+  const pad=14, lh=12.5;
+  DIMENSIONS.forEach((d,i)=>{ const avg=avgs[i], v=verdictFor(avg); const vc=v.cls==='s-low'?C.warn:v.cls==='s-mid'?C.amber:C.accentInk;
+    const guidance=(avg<2.0)?[['Watch for.',d.redFlag],['Design brief.',d.brief]]:[['Signal of good design.',d.goodSignal],['To sustain it.','Keep the evidence current: '+d.signal]];
+    doc.setFontSize(9.5); const paras=guidance.map(g=>layoutRich(CW-2*pad,g[0],g[1]));
+    let simY=18+16+12; paras.forEach((p,idx)=>{ if(idx>0)simY+=8; simY+=p.lines.length*lh; }); const boxH=simY+6;
+    if(y+boxH>H-44){ doc.addPage(); y=50; }
+    setDraw(C.line); doc.setLineWidth(0.8); doc.roundedRect(M,y,CW,boxH,6,6,'S');
+    let yy=y+18; doc.setFont('helvetica','bold'); doc.setFontSize(11); setText(C.ink); doc.text(d.id+' · '+d.title, M+pad, yy); yy+=16;
+    doc.setFont('helvetica','bold'); doc.setFontSize(10); setText(vc); doc.text(avg.toFixed(1)+' / 3 · '+v.head, M+pad, yy); yy+=12;
+    doc.setFontSize(9.5); paras.forEach((p,idx)=>{ if(idx>0)yy+=8; yy=drawRich(M+pad,yy,p,lh); }); y+=boxH+12; });
+
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){ doc.setPage(p);
+    setDraw(C.lineSoft); doc.setLineWidth(0.5); doc.line(M,H-32,W-M,H-32);
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); setText(C.muted);
+    doc.text('Climate Information Services · Design Diagnostic · cisgrid.org', M, H-20);
+    doc.text('Page '+p+' of '+pages, W-M, H-20, {align:'right'}); }
   return doc;
 }
 
