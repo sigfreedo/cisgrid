@@ -132,6 +132,7 @@ footer.site p{margin:.4rem 0}
 .progress > i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s ease}
 .iv-body{flex:1;overflow-y:auto}
 .iv-inner{max-width:720px;margin:0 auto;padding:26px 20px 140px}
+.iv-inner.wide{max-width:900px}   /* report: wider so the six dimensions fit on two rows */
 .bubble{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
   box-shadow:var(--shadow);margin:14px 0;animation:rise .25s ease}
 @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -677,6 +678,7 @@ function render(){
   ivInner.innerHTML='';
   ivActions.classList.remove('hidden');
   document.getElementById('exitBtn').style.display='';   // restored (hidden only on the report)
+  ivInner.classList.remove('wide');
 
   /* --- consent screen --- */
   if(state.q === -2){
@@ -918,6 +920,7 @@ function renderReport(){
   ivActions.classList.add('hidden');
   // Interview is over: hide "Save and exit", fill the bar, label it Completed.
   document.getElementById('exitBtn').style.display='none';
+  ivInner.classList.add('wide');
   document.getElementById('progFill').style.width='100%';
   document.getElementById('progLabel').textContent='Completed';
   document.querySelector('.progress').setAttribute('aria-valuenow','100');
@@ -932,7 +935,7 @@ function renderReport(){
     <div class="report-head">
       <p class="eyebrow">Climate Information Services · design diagnostic</p>
       <h3>Where your service needs design attention</h3>
-      <p class="section-sub" style="margin:.5rem 0 0">Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.</p>
+      <p class="section-sub" style="margin:.5rem 0 0">A formative, heuristic reading of your own answers: it shows where the service is still under-designed and turns each gap into a design brief to act on, rather than scoring the service.</p>
     </div>
 
     <div class="attention">
@@ -1138,7 +1141,7 @@ async function buildPdfDoc(){
   });
 
   doc.setFontSize(8); doc.setTextColor(120);
-  doc.text('Heuristic and formative: it turns what is not yet designed into a brief, it does not certify a score.', M, H-28);
+  doc.text('A formative, heuristic reading: it turns each under-designed dimension into a design brief to act on, rather than scoring the service.', M, H-28);
   return doc;
 }
 
