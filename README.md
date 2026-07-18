@@ -10,7 +10,9 @@ Everything runs client-side in `index.html`. No build step, no framework, no ser
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The whole site: landing, framework, privacy policy, contact, interview, report. |
+| `index.html` | The site: landing, framework, interview, report. |
+| `privacy.html` | The privacy policy, served at `cisgrid.org/privacy`. |
+| `contact.html` | The contact form, served at `cisgrid.org/contact`. |
 | `apps-script.gs` | Google Apps Script that receives the anonymous scores and appends them to your Sheet. |
 | `og-image.png` | Social preview image, referenced by the Open Graph tags. |
 | `LICENSE` | MIT for the code, CC BY-SA 4.0 for the diagnostic content. |
@@ -57,12 +59,20 @@ Create a free account at goatcounter.com, choose a site code, and put it in the 
 
 ## 3. Set up the contact form (Web3Forms)
 
-Create a free access key at web3forms.com with the destination email address, and paste it into `CONFIG.WEB3FORMS_KEY`. Messages arrive in that inbox; nothing is stored on the site.
+The form lives on its own page (`contact.html`, served at `/contact`) and collects name (optional), email, a topic chosen from a short list, and a message. The chosen topic becomes the email subject, so you can triage at a glance. A hidden honeypot field filters basic bots.
+
+Create a free access key at web3forms.com and paste it into `CONFIG.WEB3FORMS_KEY` at the top of `contact.html`. Messages arrive in your inbox; nothing is stored on the site.
+
+The only required dashboard action is to set the **recipient** email to `salvatore.didio@unipa.it`, since the account defaults to the address you signed up with.
+
+Spam protection on the free plan comes from Web3Forms' automatic server-side check plus the honeypot field already in the form; that is enough for this low-traffic use. Free hCaptcha can be added later if spam appears.
+
+Two features are **Pro (paid) only** and are intentionally not used: the autoresponder (an automatic acknowledgement email to the sender) and Restrict to Domain (locking the key to `cisgrid.org`). The on-page confirmation replaces the autoresponder; both can be switched on later from the Web3Forms dashboard if you ever upgrade.
 
 ## 4. Publish on GitHub Pages
 
 1. Create a **public** repository, for example `cisgrid`.
-2. Upload `index.html`, `og-image.png`, `LICENSE`, `apps-script.gs`, `README.md` to the root.
+2. Upload `index.html`, `privacy.html`, `contact.html`, `og-image.png`, `apps-script.gs`, `LICENSE`, `README.md` to the root.
 3. Settings → Pages → Source: *Deploy from a branch*, branch `main`, folder `/ (root)`.
 4. Settings → Pages → Custom domain: enter `cisgrid.org` and save. This writes a `CNAME` file into the repository.
 5. Tick **Enforce HTTPS** once the certificate has been issued (it can take up to an hour).
@@ -91,7 +101,7 @@ Run one full pass on the live domain, not on the local file. Voice recognition n
 - The consent screen appears first, and declining still lets the interview run.
 - Each dimension shows its explanation, then five questions with an example and the 0–3 scale.
 - Leaving mid-interview and returning offers **Resume**, with the answers intact.
-- The radar renders six labelled axes and the two lowest dimensions are named as priorities.
+- The radar renders six labelled axes; the attention map names where to look first.
 - The PDF downloads; the contact form returns a success message and the email arrives.
 - With consent given, a row appears in the Sheet on completion; abandoning mid-way writes an `abandoned` row with the dimension reached.
 - On Chrome, read-aloud and dictation work; on Firefox, dictation is hidden with a note to type.
@@ -99,9 +109,7 @@ Run one full pass on the live domain, not on the local file. Voice recognition n
 ## Launch checklist beyond the site
 
 - Replace the placeholder in §9 of the manuscript (`available at: zzzzzzzz`) with `cisgrid.org`.
-- Add the Data Protection Officer contact for the University of Palermo to the privacy policy, where the page currently shows a marked placeholder.
-- Add the full citation and DOI in the footer and in `LICENSE` once the article is published.
-- Set `REPO_URL` so the footer credit links to the public repository.
+- Add the full citation and DOI in `LICENSE` once the article is published.
 - Run a pilot with two or three teams before circulating the link widely, to check the questions read correctly outside the authors' context.
 
 ## Known limits
